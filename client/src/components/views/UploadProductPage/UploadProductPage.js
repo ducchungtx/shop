@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { Typography, Button, Form, message, Input, Icon } from 'antd';
+
+import FileUpload from '../../utils/FileUpload';
+
+const { Title } = Typography;
+const { TextArea } = Input;
 
 const continents = [
   { key: 1, value: 'Africa' },
@@ -15,6 +21,7 @@ function UploadProductPage() {
   const [descritionValue, setDescriptionValue] = useState('');
   const [priceValue, setPriceValue] = useState(0);
   const [continentValue, setContinentValue] = useState(1);
+  const [images, setImages] = useState([]);
 
   const onTitleChange = (e) => {
     setTitleValue(e.currentTarget.value);
@@ -32,28 +39,34 @@ function UploadProductPage() {
     setContinentValue(e.currentTarget.value);
   }
 
+  const updateImages = newImages => {
+    console.log('newImages', newImages);
+    setImages(newImages);
+  }
+
   return (
     <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-        <h2>Upload Travel Product</h2>
+        <Title level={2}>Upload Travel Product</Title>
       </div>
-      <form>
+      <Form>
         {/* Dropzone */}
+        <FileUpload refreshFunction={updateImages} />
         <br /><br />
         <label>Title</label>
-        <input
+        <Input
           onChange={onTitleChange}
           value={titleValue}
         />
         <br /><br />
         <label>Description</label>
-        <textarea
+        <TextArea
           onChange={onDescriptionChange}
           value={descritionValue}
-        ></textarea>
+        ></TextArea>
         <br /><br />
         <label>Price($)</label>
-        <input
+        <Input
           onChange={onPriceChange}
           value={priceValue}
           type="number"
@@ -64,12 +77,12 @@ function UploadProductPage() {
           })}
         </select>
         <br /><br />
-        <button
+        <Button
           onClick
         >
           Submit
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   )
 }
